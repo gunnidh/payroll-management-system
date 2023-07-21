@@ -6,9 +6,9 @@ function Start() {
     return (
         <div>
             <header>
-                <h4>
-                    This Payroll Management System is designed & developed by Gunnidh Kaur
-                </h4>
+                <h2 className="d-flex justify-content-center align-items-center">
+                    PAYROLL MANAGEMENT SYSTEM
+                </h2>
             </header>
             <div className="d-flex justify-content-center align-items-center vh-100 loginPage">
                 <div className="p-3 rounded w-25 border loginForm text-center">

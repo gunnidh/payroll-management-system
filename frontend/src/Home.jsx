@@ -55,10 +55,10 @@ function Home() {
       .catch((err) => console.log(err));
   };
 
-  function CheckAdminCount({ count }) {
+  function CheckAdminCount({ count ,id}) {
     if (count > 1) {
       return (
-        <button onClick={(e) => handleRemoveAdmin(employee.id)} className="btn btn-sm btn-danger">
+        <button onClick={(e) => handleRemoveAdmin(id)} className="btn btn-sm btn-danger">
         Remove Admin
         </button>
       );
@@ -113,7 +113,7 @@ function Home() {
                 <tr key={index}>
                   <td>{employee.email}</td>
                   <td>
-                  <CheckAdminCount count={adminCount} />
+                  <CheckAdminCount count={adminCount} id={employee.id}/>
                   </td>
                 </tr>
               );
