@@ -52,7 +52,7 @@ con.connect(function (err) {
 
 app.get("/getEmployee", (req, res) => {
   const sql =
-    "SELECT employee.id, employee.name, employee.email, employee.address, employee.image, compensation.salary, compensation.designation, compensation.houseRentAllowance, compensation.travelAllowance, compensation.dearnessAllowance, compensation.grossSalary, compensation.providentFund, compensation.pensionFund, compensation.bonusAmount, compensation.netSalary FROM employee INNER JOIN compensation ON employee.id = compensation.id";
+    "SELECT MAX(compensation.creationTime) as rollOutMonth, employee.id, employee.name, employee.email, employee.address, employee.image, compensation.basicSalary AS salary, compensation.designation, compensation.houseRentAllowance, compensation.travelAllowance, compensation.dearnessAllowance, compensation.grossSalary, compensation.providentFund, compensation.pensionFund, compensation.bonusAmount, compensation.netSalary FROM employee INNER JOIN compensation ON employee.id = compensation.id GROUP BY compensation.id HAVING MAX(compensation.creationTime)";
   con.query(sql, (err, result) => {
     if (err) return res.json({ Error: "Get employee error in sql" });
 
@@ -73,7 +73,7 @@ app.get("/getAdmins", (req, res) => {
 app.get("/get/:id", (req, res) => {
   const id = req.params.id;
   const sql =
-    "SELECT employee.id, employee.name, employee.email, employee.address, employee.image, employee.bankName, employee.bankAccount, employee.panNumber, employee.bankIfsc, compensation.salary, compensation.designation, compensation.houseRentAllowance, compensation.travelAllowance, compensation.dearnessAllowance, compensation.grossSalary, compensation.providentFund, compensation.pensionFund, compensation.bonusAmount, compensation.netSalary FROM employee INNER JOIN compensation ON employee.id = compensation.id WHERE compensation.id = ?";
+    "SELECT compensation.creationTime , employee.id, employee.name, employee.email, employee.address, employee.image, employee.bankName, employee.bankAccount, employee.panNumber, employee.bankIfsc, compensation.basicSalary AS salary, compensation.designation, compensation.houseRentAllowance, compensation.travelAllowance, compensation.dearnessAllowance, compensation.grossSalary, compensation.providentFund, compensation.pensionFund, compensation.bonusAmount, compensation.netSalary, compensation.rollOutMonth FROM employee INNER JOIN compensation ON employee.id = compensation.id WHERE compensation.id = ? ORDER BY compensation.creationTime DESC";
   con.query(sql, [id], (err, result) => {
     if (err) return res.json({ Error: "Get employee error in sql" });
     return res.json({ Status: "Success", Result: result });
@@ -138,19 +138,39 @@ app.get("/employeeCount", (req, res) => {
 });
 
 app.get("/salary", (req, res) => {
-  const sql = "Select sum(salary) as sumOfSalary from compensation";
+  const sql = "Select sum(basicSalary) as sumOfSalary from compensation";
   con.query(sql, (err, result) => {
     if (err) return res.json({ Error: "Error in runnig query" });
     return res.json(result);
   });
 });
 
+app.get("/salarySlip/:id", (req, res) => {
+  const id = req.params.id;
+  const getAllSalarySlips = "SELECT * FROM salary_records WHERE id = ?";
+  con.query(getAllSalarySlips, [id], (err, result) => {
+    if (err)
+      return res.json({
+        Error: "Error while getting result from salary records table in sql",
+      });
+    return res.json({ Status: "Success", Result: result });
+  });
+});
+
 app.put("/update/:id", (req, res) => {
   const id = req.params.id;
-  const sql =
-    "UPDATE compensation set salary = ? , designation = ? WHERE id = ?";
-  con.query(sql, [req.body.salary, req.body.designation, id], (err, result) => {
-    if (err) return res.json({ Error: "update employee error in sql" });
+  const sql = "INSERT INTO compensation (`id`, `basicSalary`, `designation`, `rollOutMonth`) VALUES (?)";
+  const data = [
+    id,
+    req.body.salary,
+    req.body.designation,
+    req.body.rollOutMonth,
+  ]
+  con.query(sql, [data], (err, result) => {
+    if (err) {
+      console.log(err)
+      return res.json({ Error: "update employee error in sql" });
+    }
     return res.json({ Status: "Success" });
   });
 });
@@ -230,7 +250,6 @@ app.post("/employeeLogin", (req, res) => {
 });
 
 app.post("/create", upload.single("image"), (req, res) => {
-  console.log(req.file);
   const insertEmpDetails =
     "INSERT INTO employee (`name`,`email`, `address`,`image`, `bankAccount`,`panNumber`, `bankName`, `bankIfsc`) VALUES (?)";
   bcrypt.hash(req.body.password.toString(), 10, (err, hash) => {
@@ -246,11 +265,12 @@ app.post("/create", upload.single("image"), (req, res) => {
       req.body.bankIfsc,
     ];
     con.query(insertEmpDetails, [values], (err, results, fields) => {
-      console.log("id: " + results.insertId);
-      if (err) return res.json({ Error: "Inside create employee query" });
-
+      if (err) {
+        console.log(err);
+        return res.json({ Error: "Inside create employee query" });
+      }
       const insertCompensation =
-        "INSERT INTO compensation (`id`, `salary`, `designation`, `bonusAmount`) VALUES (?)";
+        "INSERT INTO compensation (`id`, `basicSalary`, `designation`, `bonusAmount`) VALUES (?)";
       const compensationDetails = [
         results.insertId,
         req.body.salary,

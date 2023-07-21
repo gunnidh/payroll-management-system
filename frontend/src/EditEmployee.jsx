@@ -3,6 +3,11 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 function EditEmployee() {
+  const months = [
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December',
+  ];
+
   const [data, setData] = useState({
     id: "",
     image: "",
@@ -11,6 +16,7 @@ function EditEmployee() {
     address: "",
     designation: "",
     salary: "",
+    rollOutMonth:"",
   });
   const navigate = useNavigate();
 
@@ -29,6 +35,7 @@ function EditEmployee() {
           address: res.data.Result[0].address,
           salary: res.data.Result[0].salary,
           designation: res.data.Result[0].designation,
+          rollOutMonth: res.data.Result[0].rollOutMonth,
         });
       })
       .catch((err) => console.log(err));
@@ -85,15 +92,6 @@ function EditEmployee() {
             Email:
           </label>
           {" " + data.email}
-          {/* <input
-            type="email"
-            className="form-control"
-            id="inputEmail4"
-            placeholder="Enter Email"
-            autoComplete="off"
-            onChange={(e) => setData({ ...data, email: e.target.value })}
-            value={data.email}
-          /> */}
         </div>
         <div className="col-12">
           <label htmlFor="inputSalary" className="form-label">
@@ -123,7 +121,18 @@ function EditEmployee() {
             value={data.designation}
           />
         </div>
-
+        <div className="col-12">
+        <label id="inputRollOuMonth" className="form-control">
+            Select Current Month
+          </label>
+          <select value={data.rollOutMonth} onChange={(e) => setData({ ...data, rollOutMonth: e.target.value })}>
+            {months.map((month, index) => (
+              <option key={index} value={month}>
+                {month}
+              </option>
+            ))}
+          </select>
+        </div>
         <div className="col-12">
           <button type="submit" className="btn btn-primary">
             Update

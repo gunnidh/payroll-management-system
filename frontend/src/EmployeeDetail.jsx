@@ -33,31 +33,6 @@ function EmployeeDetail() {
       .catch((err) => console.log(err));
   };
 
-  // function HandelBack() {
-  //   if (isAdmin === 1) {
-  //     return (
-  //         <Link
-  //           to={`/employee/` + employee.id}
-  //           className="btn btn-success btn-sm me-2"
-  //           >
-  //           Navigate Back
-  //           </Link>
-  //     );
-  //   }
-  //   else {
-  //     return (
-  //       <button
-  //         onClick={(e) => handleLogout()}
-  //         className="btn btn-warning btn-sm me-2"
-  //       >
-  //         {" "}
-  //         Logout
-  //       </button>
-  //     );
-  //   }
-  // }
-
-
 return (
   <div>
     <div className="d-flex justify-content-center flex-column align-items-center mt-3">
@@ -127,9 +102,8 @@ return (
       to={`/employeePaySlip/` + employee.id}
       className="btn btn-primary btn-sm me-2"
     >
-      Pay Slip
+      Pay Slips
     </Link>
-    {/* <HandelBack /> */}
   </div>
 );
 }

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 21, 2023 at 04:26 PM
+-- Generation Time: Jul 22, 2023 at 01:25 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -29,16 +29,15 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `admin` (
   `id` int(11) NOT NULL,
-  `creationTime` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updationTime` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `creationTime` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `admin`
 --
 
-INSERT INTO `admin` (`id`, `creationTime`, `updationTime`) VALUES
-(31, '2023-07-21 12:04:22', '2023-07-21 12:04:22');
+INSERT INTO `admin` (`id`, `creationTime`) VALUES
+(32, '2023-07-21 16:13:22');
 
 -- --------------------------------------------------------
 
@@ -47,28 +46,34 @@ INSERT INTO `admin` (`id`, `creationTime`, `updationTime`) VALUES
 --
 
 CREATE TABLE `compensation` (
+  `transactionId` int(11) NOT NULL,
   `id` int(11) NOT NULL,
-  `salary` int(11) NOT NULL,
+  `basicSalary` int(11) NOT NULL,
   `designation` varchar(50) NOT NULL,
-  `houseRentAllowance` double GENERATED ALWAYS AS (`salary` * 0.2) STORED,
-  `travelAllowance` double GENERATED ALWAYS AS (`salary` * 0.15) STORED,
-  `dearnessAllowance` double GENERATED ALWAYS AS (`salary` * 0.18) STORED,
-  `grossSalary` double GENERATED ALWAYS AS (`salary` + `salary` * 0.2 + `salary` * 0.15) STORED,
-  `taxDeducted` double GENERATED ALWAYS AS ((`salary` + `salary` * 0.2 + `salary` * 0.15) * 0.25) STORED,
-  `providentFund` double GENERATED ALWAYS AS (`salary` * 0.12) STORED,
-  `pensionFund` double GENERATED ALWAYS AS (`salary` * 0.08) STORED,
+  `houseRentAllowance` double GENERATED ALWAYS AS (`basicSalary` * 0.2) STORED,
+  `travelAllowance` double GENERATED ALWAYS AS (`basicSalary` * 0.15) STORED,
+  `dearnessAllowance` double GENERATED ALWAYS AS (`basicSalary` * 0.18) STORED,
+  `grossSalary` double GENERATED ALWAYS AS (`basicSalary` + `basicSalary` * 0.2 + `basicSalary` * 0.15) STORED,
+  `taxDeducted` double GENERATED ALWAYS AS ((`basicSalary` + `basicSalary` * 0.2 + `basicSalary` * 0.15) * 0.25) STORED,
+  `providentFund` double GENERATED ALWAYS AS (`basicSalary` * 0.12) STORED,
+  `pensionFund` double GENERATED ALWAYS AS (`basicSalary` * 0.08) STORED,
   `bonusAmount` double DEFAULT NULL,
-  `netSalary` double GENERATED ALWAYS AS (`salary` + `salary` * 0.2 + `salary` * 0.15 - (`salary` + `salary` * 0.2 + `salary` * 0.15) * 0.25 - `salary` * 0.12 - `salary` * 0.08 + coalesce(`bonusAmount`,0)) STORED,
-  `creationTime` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updationTime` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `netSalary` double GENERATED ALWAYS AS (`basicSalary` + `basicSalary` * 0.2 + `basicSalary` * 0.15 - (`basicSalary` + `basicSalary` * 0.2 + `basicSalary` * 0.15) * 0.25 - `basicSalary` * 0.12 - `basicSalary` * 0.08 + coalesce(`bonusAmount`,0)) STORED,
+  `rollOutMonth` varchar(20) NOT NULL,
+  `creationTime` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `compensation`
 --
 
-INSERT INTO `compensation` (`id`, `salary`, `designation`, `bonusAmount`, `creationTime`, `updationTime`) VALUES
-(31, 1200000, 'SDE2', 100000, '2023-07-21 12:03:47', '2023-07-21 12:03:47');
+INSERT INTO `compensation` (`transactionId`, `id`, `basicSalary`, `designation`, `bonusAmount`, `rollOutMonth`, `creationTime`) VALUES
+(1, 32, 1000000, 'Admin', 50000, 'January', '2023-07-21 21:20:34'),
+(2, 36, 1300000, 'SDE2', 230000, 'April', '2023-07-21 21:20:34'),
+(4, 36, 1000000, 'Software Engineer', 300000, 'November', '2023-07-21 21:20:34'),
+(5, 36, 2300000, 'SDE3', NULL, 'April', '2023-07-21 21:20:34'),
+(6, 36, 3300000, 'SDE4', NULL, 'April', '2023-07-21 21:20:34'),
+(7, 36, 4300000, 'SDE5', NULL, 'October', '2023-07-21 21:25:34');
 
 -- --------------------------------------------------------
 
@@ -86,16 +91,16 @@ CREATE TABLE `employee` (
   `bankName` varchar(100) NOT NULL,
   `panNumber` varchar(100) NOT NULL,
   `bankIfsc` varchar(100) NOT NULL,
-  `creationTime` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updationTime` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `creationTime` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `employee`
 --
 
-INSERT INTO `employee` (`id`, `name`, `email`, `address`, `image`, `bankAccount`, `bankName`, `panNumber`, `bankIfsc`, `creationTime`, `updationTime`) VALUES
-(31, 'Ajay', 'dhawan@gmail.com', 'INDIA', 'image_1689941027212.jpeg', 2147483647, 'AXIS', 'ASDF9898ASDF', 'AXIS009', '2023-07-21 12:03:47', '2023-07-21 13:57:51');
+INSERT INTO `employee` (`id`, `name`, `email`, `address`, `image`, `bankAccount`, `bankName`, `panNumber`, `bankIfsc`, `creationTime`) VALUES
+(32, 'Admin', 'admin@gmail.com', 'Bangalore, India', 'image_1689955990207.jpeg', 2147483647, 'Axis Bank', 'HQ435GH89', 'AXIS009', '2023-07-21 16:13:10'),
+(36, 'Gunnidh Kaur', 'gkaur@gmail.com', 'Bangalore, India', 'image_1689969942905.jpg', 232323232, 'HDFC', 'HQ767JK90', 'HDFC0034', '2023-07-21 20:05:43');
 
 -- --------------------------------------------------------
 
@@ -115,7 +120,8 @@ CREATE TABLE `employee_credentials` (
 --
 
 INSERT INTO `employee_credentials` (`id`, `password`, `creationTime`, `updationTime`) VALUES
-(31, '$2b$10$miKWJPfgNYgxgPqLKmsP8eUJuMjWnK3v6OswsvZY2l6jm2/Z1tU8e', '2023-07-21 12:03:47', '2023-07-21 12:03:47');
+(32, '$2b$10$LEHD7osFjs.ewMImEGTMke80mYTRSm60wRm1MPll7wZ6JpgENTQKm', '2023-07-21 16:13:10', '2023-07-21 16:13:10'),
+(36, '$2b$10$LEHD7osFjs.ewMImEGTMke80mYTRSm60wRm1MPll7wZ6JpgENTQKm', '2023-07-21 20:14:14', '2023-07-21 20:14:14');
 
 --
 -- Indexes for dumped tables
@@ -131,13 +137,17 @@ ALTER TABLE `admin`
 -- Indexes for table `compensation`
 --
 ALTER TABLE `compensation`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`transactionId`),
+  ADD KEY `compensation_ibfk_1` (`id`);
 
 --
 -- Indexes for table `employee`
 --
 ALTER TABLE `employee`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `email` (`email`),
+  ADD UNIQUE KEY `panNumber` (`panNumber`),
+  ADD UNIQUE KEY `bankAccount` (`bankAccount`);
 
 --
 -- Indexes for table `employee_credentials`
@@ -153,25 +163,25 @@ ALTER TABLE `employee_credentials`
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT for table `compensation`
 --
 ALTER TABLE `compensation`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `transactionId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `employee`
 --
 ALTER TABLE `employee`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `employee_credentials`
 --
 ALTER TABLE `employee_credentials`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- Constraints for dumped tables
@@ -187,7 +197,7 @@ ALTER TABLE `admin`
 -- Constraints for table `compensation`
 --
 ALTER TABLE `compensation`
-  ADD CONSTRAINT `compensation_ibfk_1` FOREIGN KEY (`id`) REFERENCES `employee` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `compensation_ibfk_1` FOREIGN KEY (`id`) REFERENCES `employee` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `employee_credentials`
