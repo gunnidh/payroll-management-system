@@ -48,22 +48,6 @@ function EmployeeDetail() {
           alt=""
           className="empImg"
         />
-        {/* <div className="d-flex align-items-left flex-column mt-5">
-          <h3>Employee ID: {employee.id}</h3>
-          <h3>Name: {employee.name}</h3>
-          <h3>Email: {employee.email}</h3>
-          <h3>Address: {employee.address}</h3>
-          <h3>Salary: {employee.salary}</h3>
-          <h3>Designation: {employee.designation}</h3>
-          <h3>HRA: {employee.houseRentAllowance}</h3>
-          <h3>DA: {employee.dearnessAllowance}</h3>
-          <h3>TA: {employee.travelAllowance}</h3>
-          <h3>PF: {employee.providentFund}</h3>
-          <h3>Pension Fund: {employee.pensionFund}</h3>
-          <h3>Gross Salary: {employee.grossSalary}</h3>
-          <h3>Net Salary: {employee.netSalary}</h3>
-          <h3>Bonus Amount: {employee.bonusAmount}</h3>
-        </div> */}
       </div>
 
       <table className="table table-hover">
@@ -132,10 +116,11 @@ function EmployeeDetail() {
           </tr>
         </tbody>
       </table>
+
       <div>
-        {/* <button className='btn btn-primary me-2'>Edit</button> */}
         <handelBack/>
       </div>
+      
     </div>
   );
 }
