@@ -73,7 +73,7 @@ app.get("/getAdmins", (req, res) => {
 app.get("/get/:id", (req, res) => {
   const id = req.params.id;
   const sql =
-    "SELECT employee.id, employee.name, employee.email, employee.address, employee.image, compensation.salary, compensation.designation, compensation.houseRentAllowance, compensation.travelAllowance, compensation.dearnessAllowance, compensation.grossSalary, compensation.providentFund, compensation.pensionFund, compensation.bonusAmount, compensation.netSalary FROM employee INNER JOIN compensation ON employee.id = compensation.id WHERE compensation.id = ?";
+    "SELECT employee.id, employee.name, employee.email, employee.address, employee.image, employee.bankName, employee.bankAccount, employee.panNumber, employee.bankIfsc, compensation.salary, compensation.designation, compensation.houseRentAllowance, compensation.travelAllowance, compensation.dearnessAllowance, compensation.grossSalary, compensation.providentFund, compensation.pensionFund, compensation.bonusAmount, compensation.netSalary FROM employee INNER JOIN compensation ON employee.id = compensation.id WHERE compensation.id = ?";
   con.query(sql, [id], (err, result) => {
     if (err) return res.json({ Error: "Get employee error in sql" });
     return res.json({ Status: "Success", Result: result });
