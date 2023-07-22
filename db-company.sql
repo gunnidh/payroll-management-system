@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 22, 2023 at 01:25 AM
+-- Generation Time: Jul 22, 2023 at 02:16 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -68,12 +68,7 @@ CREATE TABLE `compensation` (
 --
 
 INSERT INTO `compensation` (`transactionId`, `id`, `basicSalary`, `designation`, `bonusAmount`, `rollOutMonth`, `creationTime`) VALUES
-(1, 32, 1000000, 'Admin', 50000, 'January', '2023-07-21 21:20:34'),
-(2, 36, 1300000, 'SDE2', 230000, 'April', '2023-07-21 21:20:34'),
-(4, 36, 1000000, 'Software Engineer', 300000, 'November', '2023-07-21 21:20:34'),
-(5, 36, 2300000, 'SDE3', NULL, 'April', '2023-07-21 21:20:34'),
-(6, 36, 3300000, 'SDE4', NULL, 'April', '2023-07-21 21:20:34'),
-(7, 36, 4300000, 'SDE5', NULL, 'October', '2023-07-21 21:25:34');
+(1, 32, 1000000, 'Admin', 50000, 'January', '2023-07-21 21:20:34');
 
 -- --------------------------------------------------------
 
@@ -99,8 +94,7 @@ CREATE TABLE `employee` (
 --
 
 INSERT INTO `employee` (`id`, `name`, `email`, `address`, `image`, `bankAccount`, `bankName`, `panNumber`, `bankIfsc`, `creationTime`) VALUES
-(32, 'Admin', 'admin@gmail.com', 'Bangalore, India', 'image_1689955990207.jpeg', 2147483647, 'Axis Bank', 'HQ435GH89', 'AXIS009', '2023-07-21 16:13:10'),
-(36, 'Gunnidh Kaur', 'gkaur@gmail.com', 'Bangalore, India', 'image_1689969942905.jpg', 232323232, 'HDFC', 'HQ767JK90', 'HDFC0034', '2023-07-21 20:05:43');
+(32, 'Admin', 'admin@gmail.com', 'Bangalore, India', 'image_1689955990207.jpeg', 2147483647, 'Axis Bank', 'HQ435GH89', 'AXIS009', '2023-07-21 16:13:10');
 
 -- --------------------------------------------------------
 
@@ -120,8 +114,7 @@ CREATE TABLE `employee_credentials` (
 --
 
 INSERT INTO `employee_credentials` (`id`, `password`, `creationTime`, `updationTime`) VALUES
-(32, '$2b$10$LEHD7osFjs.ewMImEGTMke80mYTRSm60wRm1MPll7wZ6JpgENTQKm', '2023-07-21 16:13:10', '2023-07-21 16:13:10'),
-(36, '$2b$10$LEHD7osFjs.ewMImEGTMke80mYTRSm60wRm1MPll7wZ6JpgENTQKm', '2023-07-21 20:14:14', '2023-07-21 20:14:14');
+(32, '$2b$10$LEHD7osFjs.ewMImEGTMke80mYTRSm60wRm1MPll7wZ6JpgENTQKm', '2023-07-21 16:13:10', '2023-07-21 16:13:10');
 
 --
 -- Indexes for dumped tables
@@ -197,7 +190,7 @@ ALTER TABLE `admin`
 -- Constraints for table `compensation`
 --
 ALTER TABLE `compensation`
-  ADD CONSTRAINT `compensation_ibfk_1` FOREIGN KEY (`id`) REFERENCES `employee` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `compensation_ibfk_1` FOREIGN KEY (`id`) REFERENCES `employee` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `employee_credentials`
