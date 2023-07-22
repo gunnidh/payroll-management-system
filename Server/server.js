@@ -52,7 +52,7 @@ con.connect(function (err) {
 
 app.get("/getEmployee", (req, res) => {
   const sql =
-    "SELECT MAX(compensation.creationTime) as rollOutMonth, employee.id, employee.name, employee.email, employee.address, employee.image, compensation.basicSalary AS salary, compensation.designation, compensation.houseRentAllowance, compensation.travelAllowance, compensation.dearnessAllowance, compensation.grossSalary, compensation.providentFund, compensation.pensionFund, compensation.bonusAmount, compensation.netSalary FROM employee INNER JOIN compensation ON employee.id = compensation.id GROUP BY compensation.id HAVING MAX(compensation.creationTime)";
+    "SELECT e.id, e.name , e.email, e.address, e.image, c.designation, c.basicSalary AS salary, c.houseRentAllowance, c.travelAllowance, c.dearnessAllowance, c.grossSalary, c.providentFund, c.pensionFund, c.bonusAmount, c.creationTime as rollOutMonth FROM employee e JOIN compensation c ON e.id = c.id JOIN ( SELECT id, MAX(creationTime) AS latest_creationTime FROM compensation GROUP BY id ) latest_sal ON c.id = latest_sal.id AND c.creationTime = latest_sal.latest_creationTime;";
   con.query(sql, (err, result) => {
     if (err) return res.json({ Error: "Get employee error in sql" });
 
