@@ -37,7 +37,16 @@ function Employee() {
       .delete("http://localhost:8081/delete/" + id)
       .then((res) => {
         if (res.data.Status === "Success") {
-          window.location.reload(true);
+          axios
+            .get("http://localhost:8081/getEmployee")
+            .then((res) => {
+              if (res.data.Status === "Success") {
+                setData(res.data.Result);
+              } else {
+                alert("Error");
+              }
+            })
+            .catch((err) => console.log(err));
         } else {
           alert("Error");
         }
@@ -77,7 +86,7 @@ function Employee() {
       <div className="d-flex justify-content-center mt-2">
         <h3>Employee List</h3>
       </div>
-      
+
       <Link to="/create" className="btn btn-success">
         Add Employee
       </Link>
@@ -100,7 +109,7 @@ function Employee() {
               return (
                 <tr key={index}>
                   <td>{employee.id}</td>
-                  <td>{employee.name}</td>
+                  <td>{employee.firstName + " " + employee.lastName}</td>
                   <td>
                     {
                       <img

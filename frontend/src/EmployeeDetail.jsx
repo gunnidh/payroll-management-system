@@ -56,8 +56,12 @@ return (
           <td>{employee.id}</td>
         </tr>
         <tr>
-          <th scope="row">Name:</th>
-          <td>{employee.name}</td>
+          <th scope="row">First Name:</th>
+          <td>{employee.firstName}</td>
+        </tr>
+        <tr>
+          <th scope="row">Last Name:</th>
+          <td>{employee.lastName}</td>
         </tr>
         <tr>
           <th scope="row">Email:</th>

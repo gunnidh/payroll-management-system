@@ -1,50 +1,11 @@
--- phpMyAdmin SQL Dump
--- version 5.2.1
--- https://www.phpmyadmin.net/
---
--- Host: 127.0.0.1
--- Generation Time: Aug 02, 2023 at 11:04 AM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.4
-
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
-SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
---
--- Database: `db-company`
---
-
--- --------------------------------------------------------
-
---
--- Table structure for table `admin`
---
-
 CREATE TABLE `admin` (
   `adminId` int(11) NOT NULL,
   `id` int(11) NOT NULL,
   `creationTime` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `admin`
---
-
 INSERT INTO `admin` (`adminId`, `id`, `creationTime`) VALUES
-(1, 32, '2023-07-21 10:43:22');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `bank_details`
---
+(1, 32, '2023-07-21 16:13:22');
 
 CREATE TABLE `bank_details` (
   `bankAccount` bigint(11) NOT NULL,
@@ -54,19 +15,17 @@ CREATE TABLE `bank_details` (
   `creationTime` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `bank_details`
---
-
 INSERT INTO `bank_details` (`bankAccount`, `bankName`, `panNumber`, `bankIfsc`, `creationTime`) VALUES
-(765412221, 'HDFC', 'HQ234BN00H', 'HDFC0034', '2023-07-21 19:47:42'),
-(2147483647, 'Axis Bank', 'HQ435GH89', 'AXIS009', '2023-07-21 10:43:10');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `compensation`
---
+(7657659, 'HDFC', '777GTRF0CCI', 'HDFC0038', '2023-07-22 01:01:18'),
+(23456712, 'SBI', 'SBI67890', 'SBIN003', '2023-07-22 03:44:11'),
+(334567443, 'ICICI Bank', 'ABCDE1234F', 'ICIC000001', '2023-07-22 03:44:11'),
+(345464764, 'State Bank of India', 'FGHIJ5678K', 'SBIN000002', '2023-07-22 03:44:11'),
+(456789123, 'Bank of America', 'BOA98765', 'BOA0011', '2023-07-22 03:44:11'),
+(456789124, 'Chase Bank', 'CHASE54321', 'CHASE002', '2023-07-22 03:44:11'),
+(543224556, 'Chase Bank', 'RSTUV3456W', 'CHAS000004', '2023-07-22 03:44:11'),
+(765412221, 'HDFC', 'HQ234BN00H', 'HDFC0034', '2023-07-22 01:17:42'),
+(2147483647, 'Axis Bank', 'HQ435GH89', 'AXIS009', '2023-07-21 16:13:10'),
+(21474003646, 'ICICI', 'ICICI12345', 'ICIC0022', '2023-07-22 03:44:11');
 
 CREATE TABLE `compensation` (
   `transactionId` int(11) NOT NULL,
@@ -87,20 +46,18 @@ CREATE TABLE `compensation` (
   `creationTime` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `compensation`
---
-
 INSERT INTO `compensation` (`transactionId`, `id`, `basicSalary`, `designation`, `departmentId`, `bonusAmount`, `rollOutMonth`, `creationTime`) VALUES
-(1, 32, 1000000, 'Admin', 1, 50000, 'January', '2023-07-22 04:56:17'),
-(10, 43, 1300000, 'SDE2', 3, 300000, 'January', '2023-08-01 17:12:43'),
-(19, 43, 1999999, 'Chapter Lead', 3, 500000, 'August', '2023-08-02 07:47:52');
+(1, 32, 1000000, 'Admin', 1, 50000, 'January', '2023-07-22 10:26:17'),
+(9, 41, 2300000, 'Senior CA', 2, NULL, 'August', '2023-07-22 10:26:37'),
+(10, 43, 1300000, 'SDE2', 3, 300000, '', '2023-07-22 10:26:55'),
+(12, 44, 1100000, 'Admin', 2, 50000, 'July', '2023-07-22 10:32:38'),
+(13, 45, 1200000, 'Head of Sales', 1, 7000, 'July', '2023-07-22 10:29:44'),
+(14, 46, 1300000, 'HR Intern', 4, 50000, 'July', '2023-07-22 10:32:56'),
+(15, 47, 1400000, 'System Engineer', 3, 5000, 'July', '2023-07-22 10:33:02'),
+(16, 48, 1500000, 'Resource Specialist', 4, 50000, 'July', '2023-07-22 10:33:05'),
+(17, 49, 1600000, 'HR Analyst', 4, 40000, 'July', '2023-07-22 10:33:07'),
+(18, 50, 1700000, 'Procurement Specialist', 1, 45000, 'July', '2023-07-22 10:33:11');
 
--- --------------------------------------------------------
-
---
--- Table structure for table `department`
---
 
 CREATE TABLE `department` (
   `departmentId` int(11) NOT NULL,
@@ -109,21 +66,11 @@ CREATE TABLE `department` (
   `maxSalaryRange` bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `department`
---
-
 INSERT INTO `department` (`departmentId`, `departmentName`, `minSalaryRange`, `maxSalaryRange`) VALUES
 (1, 'Sales', 350000, 2500000),
 (2, 'Accounts', 800000, 15000000),
 (3, 'Engineering', 1000000, 35000000),
 (4, 'HR', 900000, 6000000);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `employee`
---
 
 CREATE TABLE `employee` (
   `id` int(11) NOT NULL,
@@ -132,25 +79,23 @@ CREATE TABLE `employee` (
   `email` varchar(40) NOT NULL,
   `contactNumber` bigint(20) NOT NULL,
   `address` varchar(150) NOT NULL,
-  `image` varchar(50) NOT NULL DEFAULT 'default.jpeg',
+  `image` varchar(50) NOT NULL,
   `bankAccount` bigint(11) NOT NULL,
   `departmentId` int(20) NOT NULL,
   `creationTime` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `employee`
---
-
 INSERT INTO `employee` (`id`, `firstName`, `lastName`, `email`, `contactNumber`, `address`, `image`, `bankAccount`, `departmentId`, `creationTime`) VALUES
-(32, 'Admin', 'Root', 'admin@gmail.com', 0, 'Bangalore, India', 'default.jpeg', 2147483647, 1, '2023-07-21 10:43:10'),
-(43, 'Gunnidh', 'Kaur', 'gkaur@gmail.com', 7901808055, 'Bangalore, India', 'default.jpeg', 765412221, 3, '2023-07-21 19:47:42');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `employee_credentials`
---
+(32, 'Admin', 'Root', 'admin@gmail.com', 0, 'Bangalore, India', 'image_1689955990207.jpeg', 2147483647, 1, '2023-07-21 16:13:10'),
+(41, 'Suma', 'Bhat', 'suma@gmail.com', 9999035299, 'Bangalore, India', 'image_1689987678635.jpg', 7657659, 2, '2023-07-22 01:01:18'),
+(43, 'Gunnidh', 'Kaur', 'gkaur@gmail.com', 7901808055, 'Bangalore, India', 'image_1689988662059.jpg', 765412221, 3, '2023-07-22 01:17:42'),
+(44, 'Joe', 'Biden', 'joeone@gamil.com', 1234567, 'India', '', 543224556, 2, '2023-07-22 09:03:01'),
+(45, 'Joe', 'Nicholas', 'joetwo@gmail.com', 6738958993, 'US', '', 345464764, 1, '2023-07-22 09:03:01'),
+(46, 'Priya', 'Ray', 'newuser@gmail.com', 356678544, 'UK', '12356774', 334567443, 4, '2023-07-22 09:04:32'),
+(47, 'Dolly', 'Singh', 'dolly@gmail.com', 345778445, 'Bangalore', '4456743', 21474003646, 3, '2023-07-22 09:14:11'),
+(48, 'Rashmi', 'Khandelwal', 'rashmi@gmail.com', 324686432, 'Bangalore', '345785235', 23456712, 4, '2023-07-22 09:14:11'),
+(49, 'Tony', 'Stark', 'new@gmail.com', 23456781, 'Australia', '345678534', 456789123, 4, '2023-07-22 09:14:11'),
+(50, 'Aashma', 'brew', 'aba@gmai.com', 345678912, 'France', '8765322345', 456789124, 1, '2023-07-22 09:14:11');
 
 CREATE TABLE `employee_credentials` (
   `id` int(11) NOT NULL,
@@ -159,13 +104,16 @@ CREATE TABLE `employee_credentials` (
   `updationTime` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `employee_credentials`
---
-
 INSERT INTO `employee_credentials` (`id`, `password`, `creationTime`, `updationTime`) VALUES
-(32, '$2b$10$LEHD7osFjs.ewMImEGTMke80mYTRSm60wRm1MPll7wZ6JpgENTQKm', '2023-07-21 10:43:10', '2023-07-21 10:43:10'),
-(43, '$2b$10$LEHD7osFjs.ewMImEGTMke80mYTRSm60wRm1MPll7wZ6JpgENTQKm', '2023-07-22 02:57:35', '2023-07-22 02:57:35');
+(32, '$2b$10$LEHD7osFjs.ewMImEGTMke80mYTRSm60wRm1MPll7wZ6JpgENTQKm', '2023-07-21 16:13:10', '2023-07-21 16:13:10'),
+(41, '$2b$10$LEHD7osFjs.ewMImEGTMke80mYTRSm60wRm1MPll7wZ6JpgENTQKm', '2023-07-22 08:27:35', '2023-07-22 08:27:35'),
+(43, '$2b$10$LEHD7osFjs.ewMImEGTMke80mYTRSm60wRm1MPll7wZ6JpgENTQKm', '2023-07-22 08:27:35', '2023-07-22 08:27:35'),
+(44, '$2b$10$LEHD7osFjs.ewMImEGTMke80mYTRSm60wRm1MPll7wZ6JpgENTQKm', '2023-07-22 09:20:03', '2023-07-22 09:20:03'),
+(45, '$2b$10$LEHD7osFjs.ewMImEGTMke80mYTRSm60wRm1MPll7wZ6JpgENTQKm', '2023-07-22 09:20:03', '2023-07-22 09:20:03'),
+(46, '$2b$10$LEHD7osFjs.ewMImEGTMke80mYTRSm60wRm1MPll7wZ6JpgENTQKm', '2023-07-22 09:20:44', '2023-07-22 09:20:44'),
+(48, '$2b$10$LEHD7osFjs.ewMImEGTMke80mYTRSm60wRm1MPll7wZ6JpgENTQKm', '2023-07-22 09:20:44', '2023-07-22 09:20:44'),
+(49, '$2b$10$LEHD7osFjs.ewMImEGTMke80mYTRSm60wRm1MPll7wZ6JpgENTQKm', '2023-07-22 09:20:44', '2023-07-22 09:20:44');
+
 
 --
 -- Indexes for dumped tables
@@ -222,7 +170,7 @@ ALTER TABLE `employee_credentials`
 -- AUTO_INCREMENT for table `compensation`
 --
 ALTER TABLE `compensation`
-  MODIFY `transactionId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `transactionId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `department`
@@ -276,8 +224,3 @@ ALTER TABLE `employee`
 --
 ALTER TABLE `employee_credentials`
   ADD CONSTRAINT `employee_credentials_ibfk_1` FOREIGN KEY (`id`) REFERENCES `employee` (`id`) ON DELETE CASCADE;
-COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

@@ -23,7 +23,8 @@ function AddEmployee() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const formdata = new FormData();
-    formdata.append("name", data.name);
+    formdata.append("firstName", data.firstName);
+    formdata.append("lastName", data.lastName);
     formdata.append("email", data.email);
     formdata.append("password", data.password);
     formdata.append("address", data.address);
@@ -48,7 +49,7 @@ function AddEmployee() {
       <form className="row g-3 w-50" onSubmit={handleSubmit}>
         <div className="col-12">
           <label htmlFor="inputName" className="form-label">
-            Name
+            First Name
           </label>
           <input
             type="text"
@@ -56,7 +57,20 @@ function AddEmployee() {
             id="inputName"
             placeholder="Enter Name"
             autoComplete="on"
-            onChange={(e) => setData({ ...data, name: e.target.value })}
+            onChange={(e) => setData({ ...data, firstName: e.target.value })}
+          />
+        </div>
+        <div className="col-12">
+          <label htmlFor="inputName" className="form-label">
+            Last Name
+          </label>
+          <input
+            type="text"
+            className="form-control"
+            id="inputName"
+            placeholder="Enter Name"
+            autoComplete="on"
+            onChange={(e) => setData({ ...data, lastName: e.target.value })}
           />
         </div>
         <div className="col-12">

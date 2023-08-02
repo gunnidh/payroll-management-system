@@ -32,7 +32,7 @@ function EmployeePaySlip() {
           <div key={index} id="salary_plip">
             <div className="d-flex flex-column mt-3">
               <h2>
-                Salary-splic created on{" "}
+                Salary-slip created on{" "}
                 {new Date(employee.creationTime).toLocaleString(
                   "en-US",
                   options
@@ -53,8 +53,12 @@ function EmployeePaySlip() {
                     <td>{employee.id}</td>
                   </tr>
                   <tr>
-                    <th scope="row">Name:</th>
-                    <td>{employee.name}</td>
+                  <th scope="row">First Name:</th>
+                  <td>{employee.firstName}</td>
+                  </tr>
+                  <tr>
+                  <th scope="row">Last Name:</th>
+                  <td>{employee.lastName}</td>
                   </tr>
                   <tr>
                     <th scope="row">Email:</th>
