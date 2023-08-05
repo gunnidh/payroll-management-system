@@ -86,7 +86,8 @@ app.get("/get/:id", (req, res) => {
     employee.id, 
     employee.firstName, 
     employee.lastName,
-    employee.email, 
+    employee.email,
+    employee.contactNumber,
     employee.address, 
     employee.image,
     employee.bankAccount, 
@@ -199,19 +200,27 @@ app.get("/salary", (req, res) => {
 app.put("/update/:id", (req, res) => {
   const id = req.params.id;
   const sql =
-    "INSERT INTO compensation (`id`, `basicSalary`, `designation`, `rollOutMonth`) VALUES (?)";
+    "INSERT INTO compensation (`id`, `basicSalary`, `designation`, `departmentId`, `rollOutMonth`) VALUES (?)";
   const data = [
     id,
     req.body.salary,
     req.body.designation,
+    req.body.departmentId,
     req.body.rollOutMonth,
   ];
   con.query(sql, [data], (err, result) => {
     if (err) {
       console.log(err);
-      return res.json({ Error: "update employee error in sql" });
+      return res.json({ Error: "update compensation error in sql" });
     }
-    return res.json({ Status: "Success" });
+    const updateEmp = "UPDATE employee SET departmentId =" + req.body.departmentId + " value1 WHERE id = ?";
+    con.query(updateEmp, [req.body.id], (err, results, fields)=>{
+      if (err) {
+        console.log(err);
+        return res.json({ Error: "update employee error in sql" });
+      }
+      return res.json({ Status: "Success" });
+    })
   });
 });
 
@@ -296,16 +305,18 @@ app.post("/employeeLogin", (req, res) => {
 
 app.post("/create", upload.single("image"), (req, res) => {
   const insertEmpDetails =
-    "INSERT INTO employee (`firstName`, `lastName`,`email`, `address`,`image`, `bankAccount`) VALUES (?)";
+    "INSERT INTO employee (`firstName`, `lastName`, `email`, `contactNumber`, `address`, `image`, `bankAccount`, `departmentId`) VALUES (?)";
   bcrypt.hash(req.body.password.toString(), 10, (err, hash) => {
     if (err) return res.json({ Error: "Error in hashing password" });
     const values = [
       req.body.firstName,
       req.body.LastName,
       req.body.email,
+      req.body.contactNumber,
       req.body.address,
       req.file.filename,
-      req.body.bankAccount
+      req.body.bankAccount,
+      req.body.departmentId
     ];
     con.query(insertEmpDetails, [values], (err, results, fields) => {
       if (err) {
@@ -313,11 +324,12 @@ app.post("/create", upload.single("image"), (req, res) => {
         return res.json({ Error: "Inside create employee query" });
       }
       const insertCompensation =
-        "INSERT INTO compensation (`id`, `basicSalary`, `designation`, `bonusAmount`) VALUES (?)";
+        "INSERT INTO compensation (`id`, `basicSalary`, `designation`, `departmentId`, `bonusAmount`) VALUES (?)";
       const compensationDetails = [
         results.insertId,
         req.body.salary,
         req.body.designation,
+        req.body.departmentId,
         req.body.bonus,
       ];
       con.query(
@@ -342,7 +354,7 @@ app.post("/create", upload.single("image"), (req, res) => {
               req.body.bankName,
               req.body.panNumber,
               req.body.bankIfsc
-            ]
+            ];
             con.query(insertPan, [vals], (err, results, fields) => {
               if (err)
                 return res.json({

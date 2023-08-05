@@ -6,6 +6,8 @@ function AddEmployee() {
   const [data, setData] = useState({
     name: "",
     email: "",
+    contactNumber: "",
+    departmentId: "",
     password: "",
     address: "",
     designation: "",
@@ -26,6 +28,8 @@ function AddEmployee() {
     formdata.append("firstName", data.firstName);
     formdata.append("lastName", data.lastName);
     formdata.append("email", data.email);
+    formdata.append("contactNumber", data.contactNumber);
+    formdata.append("departmentId", data.departmentId);
     formdata.append("password", data.password);
     formdata.append("address", data.address);
     formdata.append("designation", data.designation);
@@ -87,6 +91,19 @@ function AddEmployee() {
           />
         </div>
         <div className="col-12">
+          <label htmlFor="inputContact" className="form-label">
+            Contact Number
+          </label>
+          <input
+            type="email"
+            className="form-control"
+            id="inputContact"
+            placeholder="Enter Contact"
+            autoComplete="on"
+            onChange={(e) => setData({ ...data, contactNumber: e.target.value })}
+          />
+        </div>
+        <div className="col-12">
           <label htmlFor="inputPassword4" className="form-label">
             Password
           </label>
@@ -109,6 +126,19 @@ function AddEmployee() {
             placeholder="Enter Designation"
             autoComplete="on"
             onChange={(e) => setData({ ...data, designation: e.target.value })}
+          />
+        </div>
+        <div className="col-12">
+          <label htmlFor="inputDepartmentId" className="form-label">
+            Desigantion
+          </label>
+          <input
+            type="text"
+            className="form-control"
+            id="inputDepartmentId"
+            placeholder="Enter Department Id"
+            autoComplete="on"
+            onChange={(e) => setData({ ...data, departmentId: e.target.value })}
           />
         </div>
         <div className="col-12">

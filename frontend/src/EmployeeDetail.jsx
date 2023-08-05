@@ -68,6 +68,10 @@ return (
           <td colSpan="2">{employee.email}</td>
         </tr>
         <tr>
+          <th scope="row">Contact Number:</th>
+          <td colSpan="2">{employee.concatNumber}</td>
+        </tr>
+        <tr>
           <th scope="row">Address:</th>
           <td colSpan="2">{employee.address}</td>
         </tr>

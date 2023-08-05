@@ -13,6 +13,8 @@ function EditEmployee() {
     image: "",
     name: "",
     email: "",
+    contactNumber: "",
+    departmentId:"",
     address: "",
     designation: "",
     salary: "",
@@ -32,6 +34,8 @@ function EditEmployee() {
           image: res.data.Result[0].image,
           name: res.data.Result[0].name,
           email: res.data.Result[0].email,
+          contactNumber: res.data.Result[0].contactNumber,
+          departmentId: res.data.Result[0].departmentId,
           address: res.data.Result[0].address,
           salary: res.data.Result[0].salary,
           designation: res.data.Result[0].designation,
@@ -94,6 +98,20 @@ function EditEmployee() {
           {" " + data.email}
         </div>
         <div className="col-12">
+          <label htmlFor="inputContactNubmer" className="form-label">
+            Contact Number:
+          </label>
+          <input
+            type="number"
+            className="form-control"
+            id="inputContactNubmer"
+            placeholder="Enter Contact Number:"
+            autoComplete="off"
+            onChange={(e) => setData({ ...data, contactNumber: e.target.value })}
+            value={data.contactNumber}
+          />
+        </div>
+        <div className="col-12">
           <label htmlFor="inputSalary" className="form-label">
             CTC per annum
           </label>
@@ -119,6 +137,20 @@ function EditEmployee() {
             autoComplete="off"
             onChange={(e) => setData({ ...data, designation: e.target.value })}
             value={data.designation}
+          />
+        </div>
+        <div className="col-12">
+          <label htmlFor="inputDepartmentId" className="form-label">
+          Department Id
+          </label>
+          <input
+            type="text"
+            className="form-control"
+            id="inputDepartmentId"
+            placeholder="Enter Department Id"
+            autoComplete="off"
+            onChange={(e) => setData({ ...data, departmentId: e.target.value })}
+            value={data.departmentId}
           />
         </div>
         <div className="col-12">
