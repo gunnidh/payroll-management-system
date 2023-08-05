@@ -296,7 +296,7 @@ app.post("/employeeLogin", (req, res) => {
 
 app.post("/create", upload.single("image"), (req, res) => {
   const insertEmpDetails =
-    "INSERT INTO employee (`firstName`, `lastName`,`email`, `address`,`image`, `bankAccount`,`panNumber`, `bankName`, `bankIfsc`) VALUES (?)";
+    "INSERT INTO employee (`firstName`, `lastName`,`email`, `address`,`image`, `bankAccount`, `bankName`, `bankIfsc`) VALUES (?)";
   bcrypt.hash(req.body.password.toString(), 10, (err, hash) => {
     if (err) return res.json({ Error: "Error in hashing password" });
     const values = [
@@ -339,7 +339,20 @@ app.post("/create", upload.single("image"), (req, res) => {
               return res.json({
                 Error: "Inside add employee credentials query",
               });
-            return res.json({ Status: "Success" });
+            const insertPan = "INSERT INTO bank_details (`bankAccount`, `bankName`, `panNumber`, `bankIfsc`) VALUES (?)";
+            const vals = [
+              req.body.bankAccount,
+              req.body.bankName,
+              req.body.panNumber,
+              req.body.bankIfsc
+            ]
+            con.query(insertPan, [vals], (err, results, fields) => {
+              if (err)
+                return res.json({
+                  Error: "Inside add employee credentials query",
+                });
+                return res.json({ Status: "Success" });
+            })
           });
         }
       );
