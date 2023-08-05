@@ -200,12 +200,13 @@ app.get("/salary", (req, res) => {
 app.put("/update/:id", (req, res) => {
   const id = req.params.id;
   const sql =
-    "INSERT INTO compensation (`id`, `basicSalary`, `designation`, `departmentId`, `rollOutMonth`) VALUES (?)";
+    "INSERT INTO compensation (`id`, `basicSalary`, `designation`, `departmentId`, `bonusAmount`, `rollOutMonth`) VALUES (?)";
   const data = [
     id,
     req.body.salary,
     req.body.designation,
     req.body.departmentId,
+    req.body.bonusAmount,
     req.body.rollOutMonth,
   ];
   con.query(sql, [data], (err, result) => {
@@ -213,7 +214,7 @@ app.put("/update/:id", (req, res) => {
       console.log(err);
       return res.json({ Error: "update compensation error in sql" });
     }
-    const updateEmp = "UPDATE employee SET departmentId =" + req.body.departmentId + " WHERE id = ?";
+    const updateEmp = "UPDATE employee SET departmentId =" + req.body.departmentId + " , contactNumber = "+ req.body.contactNumber + " WHERE id = ?";
     con.query(updateEmp, [req.body.id], (err, results, fields)=>{
       if (err) {
         console.log(err);

@@ -3,6 +3,11 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function AddEmployee() {
+  const months = [
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December',
+  ];
+  
   const [data, setData] = useState({
     firstName: "",
     lastName: "",
@@ -219,6 +224,18 @@ function AddEmployee() {
             autoComplete="on"
             onChange={(e) => setData({ ...data, bonus: e.target.value })}
           />
+        </div>
+        <div className="col-12">
+        <label id="inputRollOuMonth" className="form-control">
+            Select Current Month
+          </label>
+          <select value={data.rollOutMonth} onChange={(e) => setData({ ...data, rollOutMonth: e.target.value })}>
+            {months.map((month, index) => (
+              <option key={index} value={month}>
+                {month}
+              </option>
+            ))}
+          </select>
         </div>
         <div className="col-12">
           <label htmlFor="inputAddress" className="form-label">

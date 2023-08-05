@@ -69,7 +69,7 @@ return (
         </tr>
         <tr>
           <th scope="row">Contact Number:</th>
-          <td colSpan="2">{employee.concatNumber}</td>
+          <td colSpan="2">{employee.contactNumber}</td>
         </tr>
         <tr>
           <th scope="row">Address:</th>
