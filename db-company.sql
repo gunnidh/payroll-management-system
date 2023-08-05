@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 02, 2023 at 11:04 AM
+-- Generation Time: Aug 05, 2023 at 11:56 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -59,7 +59,6 @@ CREATE TABLE `bank_details` (
 --
 
 INSERT INTO `bank_details` (`bankAccount`, `bankName`, `panNumber`, `bankIfsc`, `creationTime`) VALUES
-(765412221, 'HDFC', 'HQ234BN00H', 'HDFC0034', '2023-07-21 19:47:42'),
 (2147483647, 'Axis Bank', 'HQ435GH89', 'AXIS009', '2023-07-21 10:43:10');
 
 -- --------------------------------------------------------
@@ -92,9 +91,7 @@ CREATE TABLE `compensation` (
 --
 
 INSERT INTO `compensation` (`transactionId`, `id`, `basicSalary`, `designation`, `departmentId`, `bonusAmount`, `rollOutMonth`, `creationTime`) VALUES
-(1, 32, 1000000, 'Admin', 1, 50000, 'January', '2023-07-22 04:56:17'),
-(10, 43, 1300000, 'SDE2', 3, 300000, 'January', '2023-08-01 17:12:43'),
-(19, 43, 1999999, 'Chapter Lead', 3, 500000, 'August', '2023-08-02 07:47:52');
+(1, 32, 1000000, 'Admin', 1, 50000, 'January', '2023-07-22 04:56:17');
 
 -- --------------------------------------------------------
 
@@ -132,7 +129,7 @@ CREATE TABLE `employee` (
   `email` varchar(40) NOT NULL,
   `contactNumber` bigint(20) NOT NULL,
   `address` varchar(150) NOT NULL,
-  `image` varchar(50) NOT NULL DEFAULT 'default.jpeg',
+  `image` varchar(50) NOT NULL,
   `bankAccount` bigint(11) NOT NULL,
   `departmentId` int(20) NOT NULL,
   `creationTime` timestamp NOT NULL DEFAULT current_timestamp()
@@ -143,8 +140,7 @@ CREATE TABLE `employee` (
 --
 
 INSERT INTO `employee` (`id`, `firstName`, `lastName`, `email`, `contactNumber`, `address`, `image`, `bankAccount`, `departmentId`, `creationTime`) VALUES
-(32, 'Admin', 'Root', 'admin@gmail.com', 0, 'Bangalore, India', 'default.jpeg', 2147483647, 1, '2023-07-21 10:43:10'),
-(43, 'Gunnidh', 'Kaur', 'gkaur@gmail.com', 7901808055, 'Bangalore, India', 'default.jpeg', 765412221, 3, '2023-07-21 19:47:42');
+(32, 'Admin', 'Root', 'admin@gmail.com', 0, 'Bangalore, India', 'default.jpeg', 2147483647, 1, '2023-07-21 10:43:10');
 
 -- --------------------------------------------------------
 
@@ -164,8 +160,7 @@ CREATE TABLE `employee_credentials` (
 --
 
 INSERT INTO `employee_credentials` (`id`, `password`, `creationTime`, `updationTime`) VALUES
-(32, '$2b$10$LEHD7osFjs.ewMImEGTMke80mYTRSm60wRm1MPll7wZ6JpgENTQKm', '2023-07-21 10:43:10', '2023-07-21 10:43:10'),
-(43, '$2b$10$LEHD7osFjs.ewMImEGTMke80mYTRSm60wRm1MPll7wZ6JpgENTQKm', '2023-07-22 02:57:35', '2023-07-22 02:57:35');
+(32, '$2b$10$LEHD7osFjs.ewMImEGTMke80mYTRSm60wRm1MPll7wZ6JpgENTQKm', '2023-07-21 10:43:10', '2023-07-21 10:43:10');
 
 --
 -- Indexes for dumped tables
@@ -222,7 +217,7 @@ ALTER TABLE `employee_credentials`
 -- AUTO_INCREMENT for table `compensation`
 --
 ALTER TABLE `compensation`
-  MODIFY `transactionId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `transactionId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `department`
@@ -234,13 +229,13 @@ ALTER TABLE `department`
 -- AUTO_INCREMENT for table `employee`
 --
 ALTER TABLE `employee`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
 
 --
 -- AUTO_INCREMENT for table `employee_credentials`
 --
 ALTER TABLE `employee_credentials`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
 
 --
 -- Constraints for dumped tables
