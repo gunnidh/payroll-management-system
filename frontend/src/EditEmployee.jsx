@@ -11,13 +11,15 @@ function EditEmployee() {
   const [data, setData] = useState({
     id: "",
     image: "",
-    name: "",
+    firstName: "",
+    lastName: "",
     email: "",
     contactNumber: "",
     departmentId:"",
     address: "",
     designation: "",
     salary: "",
+    bonusAmount:"",
     rollOutMonth:"",
   });
   const navigate = useNavigate();
@@ -32,12 +34,14 @@ function EditEmployee() {
           ...data,
           id: res.data.Result[0].id,
           image: res.data.Result[0].image,
-          name: res.data.Result[0].name,
+          firstName: res.data.Result[0].firstName,
+          lastName: res.data.Result[0].lastName,
           email: res.data.Result[0].email,
           contactNumber: res.data.Result[0].contactNumber,
           departmentId: res.data.Result[0].departmentId,
           address: res.data.Result[0].address,
           salary: res.data.Result[0].salary,
+          bonusAmount: res.data.Result[0].bonusAmount,
           designation: res.data.Result[0].designation,
           rollOutMonth: res.data.Result[0].rollOutMonth,
         });
@@ -75,7 +79,7 @@ function EditEmployee() {
           <label htmlFor="inputName" className="form-label">
             Name:{" "}
           </label>
-          {" " + data.name}
+          {" " + data.firstName + " " + data.lastName}
           {/* <input type="text" className="form-control" id="inputName" placeholder='Enter Name' autoComplete='off'
 					onChange={e => setData({...data, name: e.target.value})} value={data.name}/> */}
         </div>
@@ -123,6 +127,20 @@ function EditEmployee() {
             autoComplete="off"
             onChange={(e) => setData({ ...data, salary: e.target.value })}
             value={data.salary}
+          />
+        </div>
+        <div className="col-12">
+          <label htmlFor="inputBonus" className="form-label">
+            Bonus Amount
+          </label>
+          <input
+            type="number"
+            className="form-control"
+            id="inputBonus"
+            placeholder="Enter Bonus"
+            autoComplete="off"
+            onChange={(e) => setData({ ...data, bonusAmount: e.target.value })}
+            value={data.bonusAmount}
           />
         </div>
         <div className="col-12">

@@ -4,7 +4,8 @@ import { useNavigate } from "react-router-dom";
 
 function AddEmployee() {
   const [data, setData] = useState({
-    name: "",
+    firstName: "",
+    lastName: "",
     email: "",
     contactNumber: "",
     departmentId: "",
@@ -59,7 +60,7 @@ function AddEmployee() {
             type="text"
             className="form-control"
             id="inputName"
-            placeholder="Enter Name"
+            placeholder="Enter First Name"
             autoComplete="on"
             onChange={(e) => setData({ ...data, firstName: e.target.value })}
           />
@@ -72,7 +73,7 @@ function AddEmployee() {
             type="text"
             className="form-control"
             id="inputName"
-            placeholder="Enter Name"
+            placeholder="Enter Last Name"
             autoComplete="on"
             onChange={(e) => setData({ ...data, lastName: e.target.value })}
           />
@@ -95,7 +96,7 @@ function AddEmployee() {
             Contact Number
           </label>
           <input
-            type="email"
+            type="number"
             className="form-control"
             id="inputContact"
             placeholder="Enter Contact"
@@ -130,7 +131,7 @@ function AddEmployee() {
         </div>
         <div className="col-12">
           <label htmlFor="inputDepartmentId" className="form-label">
-            Desigantion
+            Department Id
           </label>
           <input
             type="text"

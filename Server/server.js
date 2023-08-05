@@ -213,7 +213,7 @@ app.put("/update/:id", (req, res) => {
       console.log(err);
       return res.json({ Error: "update compensation error in sql" });
     }
-    const updateEmp = "UPDATE employee SET departmentId =" + req.body.departmentId + " value1 WHERE id = ?";
+    const updateEmp = "UPDATE employee SET departmentId =" + req.body.departmentId + " WHERE id = ?";
     con.query(updateEmp, [req.body.id], (err, results, fields)=>{
       if (err) {
         console.log(err);
@@ -310,7 +310,7 @@ app.post("/create", upload.single("image"), (req, res) => {
     if (err) return res.json({ Error: "Error in hashing password" });
     const values = [
       req.body.firstName,
-      req.body.LastName,
+      req.body.lastName,
       req.body.email,
       req.body.contactNumber,
       req.body.address,
@@ -323,6 +323,7 @@ app.post("/create", upload.single("image"), (req, res) => {
         console.log(err);
         return res.json({ Error: "Inside create employee query" });
       }
+      const newId = results.insertId;
       const insertCompensation =
         "INSERT INTO compensation (`id`, `basicSalary`, `designation`, `departmentId`, `bonusAmount`) VALUES (?)";
       const compensationDetails = [
@@ -332,17 +333,19 @@ app.post("/create", upload.single("image"), (req, res) => {
         req.body.departmentId,
         req.body.bonus,
       ];
-      con.query(
-        insertCompensation,
-        [compensationDetails],
-        (err, results, fields) => {
-          if (err)
+      con.query( insertCompensation, [compensationDetails], (err, results, fields) => {
+          if (err){
+            console.log("error"+err)
             return res.json({
               Error: "Inside add employee compensation query",
             });
-          const insertEmpCreds =
-            "INSERT INTO employee_credentials (`id`, `password`) VALUE(?)";
-          const empCreds = [results.insertId, hash];
+          }
+          console.log(results.insertId)
+          const insertEmpCreds = "INSERT INTO employee_credentials (`id`, `password`) VALUE(?)";
+          const empCreds = [
+            newId, 
+            hash
+          ];
           con.query(insertEmpCreds, [empCreds], (err, results, fields) => {
             if (err)
               return res.json({
